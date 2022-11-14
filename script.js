@@ -1,38 +1,71 @@
-document.querySelector("#search").addEventListener("click", getPokemon);
+const searchIpnut = document.querySelector("#poke-input");
+const searchButton = document.querySelector(".search-btn");
+const pokeContainer = document.querySelector(".poke-container");
+const colors = {
+  fire: "#FDDFDF",
+  grass: "#DEFDE0",
+  electric: "#FCF7DE",
+  water: "#DEF3FD",
+  ground: "#f3e7da",
+  rock: "#d5d5d4",
+  fairy: "#fceaff",
+  poison: "#d6b3ff",
+  bug: "#f8d5a3",
+  dragon: "#97b3e6",
+  psychic: "#eaeda1",
+  flying: "#F5F5F5",
+  fighting: "#E6E0D4",
+  normal: "#F5F5F5",
+  ice: "#e0f5ff",
+};
+const pokeCount = 151;
 
-function capitalizeFirstLetter(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-}
+const initPokemon = async () => {
+  for (let i = 1; i <= pokeCount; i++) {
+    //i 1 den başladı çünkü pokemon id leri 1 den başlıyor
+    await getPokemon(i);
+  }
+};
+const getPokemon = async (id) => {
+  let url = `https://pokeapi.co/api/v2/pokemon/${id}`;
+  let res = await fetch(url);
+  let data = await res.json();
+  createPokemonBox(data);
+};
+const createPokemonBox = (pokemon) => {
+  const name = pokemon.name[0].toUpperCase() + pokemon.name.slice(1); //pokemonların baş harfnin büyük yazılmasını sağladık
+  const id = pokemon.id.toString().padStart(3, "0"); //dlerin başına 00 koyduk
+  const type = pokemon.types[0].type.name;
+  const color = colors[type];
 
-function lowerCaseName(string) {
-  return string.toLowerCase();
-}
+  const pokemonEl = document.createElement("div");
+  pokemonEl.classList.add("poke-box");
+  pokemonEl.style.backgroundColor = `${color}`;
+  pokemonEl.innerHTML = `
+  <img
+    class="poke-img"
+    src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/${id}.png"
+    alt="${name} image"
+  />
+  <h3 class="poke-name">${name}</h3>
+  <p class="poke-id"># ${id}</p>
+  <p class="poke-type">Type: ${type}</p>
+  
+  `;
+  pokeContainer.appendChild(pokemonEl);
+};
 
-function getPokemon(e) {
-  const name = document.querySelector("#pokemonName").value;
-  const pokemonName = lowerCaseName(name);
+initPokemon();
+//inputa girdiğimiz değerin hangi pokemonun baş harfiyle başlıyorsa onları filtreler
+searchIpnut.addEventListener("input", function (e) {
+  const pokeNames = document.querySelectorAll(".poke-name");
+  const search = searchIpnut.value.toLowerCase(); //inputa girilen değeri verir
 
-  fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
-    .then((response) => response.json())
-    .then((data) => {
-      document.querySelector(".pokemonBox").innerHTML = `
-      <div>
-        <img
-          src="${data.sprites.other["official-artwork"].front_default}"
-          alt="Pokemon name"
-        />
-      </div>
-      <div class="pokemonInfos">
-        <h1>${capitalizeFirstLetter(data.name)}</h3>
-        <p>Weight: ${data.weight}</p>
-      </div>`;
-    })
-    .catch((err) => {
-      document.querySelector(".pokemonBox").innerHTML = `
-      <h4>Pokemon not found 😞</h4>
-      `;
-      console.log("Pokemon not found", err);
-    });
+  pokeNames.forEach((pokeName) => {
+    pokeName.parentElement.style.display = "block";
 
-  e.preventDefault();
-}
+    if (!pokeName.innerHTML.toLowerCase().includes(search)) {
+      pokeName.parentElement.style.display = "none";
+    }
+  });
+});

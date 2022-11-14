@@ -4,27 +4,30 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
       rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+      integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
     />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="style.css" />
     <title>Pokemon API</title>
   </head>
   <body>
-    <main>
-      <div class="searchBox">
-        <input
-          id="pokemonName"
-          type="Pokemon name"
-          placeholder="Pokemon name"
-        />
-        <button id="search">🔎</button>
-      </div>
-
-      <div class="pokemonBox"></div>
-    </main>
-
+    <form id="poke-search-form">
+      <input
+        type="text"
+        name="poke-input"
+        placeholder="Pokemon Bul"
+        id="poke-input"
+      />
+      <button class="search-btn">
+        <i class="fas fa-search"></i>
+      </button>
+    </form>
+    <div class="poke-container"></div>
     <script src="script.js"></script>
   </body>
 </html>
