@@ -1,6 +1,8 @@
 const searchIpnut = document.querySelector("#poke-input");
 const searchButton = document.querySelector(".search-btn");
 const pokeContainer = document.querySelector(".poke-container");
+const pokeStats = document.querySelector(".poke-stats");
+
 const colors = {
   fire: "#FDDFDF",
   grass: "#DEFDE0",
@@ -33,25 +35,68 @@ const getPokemon = async (id) => {
   createPokemonBox(data);
 };
 const createPokemonBox = (pokemon) => {
+  const sprite = pokemon.sprites.front_default;
+  const { stats, types } = pokemon;
+  console.log(pokemon);
+
   const name = pokemon.name[0].toUpperCase() + pokemon.name.slice(1); //pokemonların baş harfnin büyük yazılmasını sağladık
-  const id = pokemon.id.toString().padStart(3, "0"); //dlerin başına 00 koyduk
+  const id = pokemon.id.toString().padStart(3, "0"); //idlerin başına 00 koyduk
   const type = pokemon.types[0].type.name;
   const color = colors[type];
+  const stats1 = pokemon.stats[0].stat.name;
+  const stats2 = pokemon.stats[1].stat.name;
+  const stats3 = pokemon.stats[2].stat.name;
+  const stats4 = pokemon.stats[3].stat.name;
+  const stats5 = pokemon.stats[4].stat.name;
+  const stats6 = pokemon.stats[5].stat.name;
+  const baseStat1 = pokemon.stats[0].base_stat;
+  const baseStat2 = pokemon.stats[1].base_stat;
+  const baseStat3 = pokemon.stats[2].base_stat;
+  const baseStat4 = pokemon.stats[3].base_stat;
+  const baseStat5 = pokemon.stats[4].base_stat;
+  const baseStat6 = pokemon.stats[5].base_stat;
+
+  const progress = document.createElement("div");
+  progress.setAttribute("value", baseStat1);
+  progress.setAttribute("max", 100);
 
   const pokemonEl = document.createElement("div");
   pokemonEl.classList.add("poke-box");
   pokemonEl.style.backgroundColor = `${color}`;
   pokemonEl.innerHTML = `
+  <h3 class="poke-name">${name}</h3>
   <img
     class="poke-img"
     src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/${id}.png"
     alt="${name} image"
   />
-  <h3 class="poke-name">${name}</h3>
+  <ul>
+  <li><a href="#about">About</a></li>
+  <li><a href="#stats">Stats</a></li>
+  <li><a href="#moves">Moves</a></li>
+  <li><a href="#evolution">Evolution</a></li>
+  <li><a href="#location">Location</a></li>
+</ul>
   <p class="poke-id"># ${id}</p>
   <p class="poke-type">Type: ${type}</p>
-  
+  <div class="poke-stats"> ${stats1}</div>
+  <div class="poke-stats"> ${baseStat1}</div>
+  <div class="poke-stats"> ${stats2}</div>
+  <div class="poke-stats"> ${baseStat2}</div>
+  <div class="poke-stats"> ${stats3}</div>
+  <div class="poke-stats"> ${baseStat3}</div>
+  <div class="poke-stats"> ${stats4}</div>
+  <div class="poke-stats"> ${baseStat4}</div>
+  <div class="poke-stats"> ${stats5}</div>
+  <div class="poke-stats"> ${baseStat5}</div>
+  <div class="poke-stats"> ${stats6}</div>
+  <div class="poke-stats"> ${baseStat6}</div>
+
+</div>
+ 
+
   `;
+  pokemonEl.appendChild(progress);
   pokeContainer.appendChild(pokemonEl);
 };
 

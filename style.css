@@ -38,6 +38,17 @@ input {
 input:focus {
   outline: none;
 }
+#myBar {
+  width: 1%;
+  height: 15px;
+  background-color: #04aa6d;
+  border-radius: 50px;
+}
+#myProgress {
+  width: 100%;
+  background-color: #ddd;
+  border-radius: 50px;
+}
 button {
   background-color: rgb(198, 239, 241);
   cursor: pointer;
@@ -55,9 +66,15 @@ button {
   padding: 20px;
   margin-top: 20px;
 }
-
+.poke-stats {
+  display: flex;
+  justify-content: space-between;
+  align-content: space-between;
+  padding: 5px;
+  font-size: 18px;
+}
 .poke-box {
-  width: 300px;
+  width: 325px;
   background-color: rgb(255, 247, 247);
   border-radius: 15px;
   padding: 10px;
@@ -69,7 +86,7 @@ button {
 .poke-box:hover {
   border: 2px solid green;
   transition: all ease-out 0.4s;
-  transform: scale(1.1);
+  /* transform: scale(1.1); */
 }
 
 .poke-box img {
@@ -83,4 +100,25 @@ button {
 
 .poke-box .poke-name {
   text-transform: capitalize;
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-size: 15px;
+}
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  padding: 5px 5px;
+  color: rgb(110, 106, 106);
+  font-weight: 300;
+  text-decoration: none;
+}
+li a:hover {
+  color: red;
 }
