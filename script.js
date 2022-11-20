@@ -1,7 +1,12 @@
 const searchIpnut = document.querySelector("#poke-input");
 const searchButton = document.querySelector(".search-btn");
 const pokeContainer = document.querySelector(".poke-container");
-const pokeStats = document.querySelector(".poke-stats");
+//const pokeStats = document.querySelector(".poke-stats");
+
+let description;
+let evolution1;
+let evolution2;
+let evolution3;
 
 const colors = {
   fire: "#FDDFDF",
@@ -20,29 +25,70 @@ const colors = {
   normal: "#F5F5F5",
   ice: "#e0f5ff",
 };
-const pokeCount = 151;
+const pokeCount = 225;
+const evoCount = 225 / 3;
 
 const initPokemon = async () => {
-  for (let i = 1; i <= pokeCount; i++) {
+  for (let i = 1, j = 1; i <= pokeCount; i++) {
     //i 1 den başladı çünkü pokemon id leri 1 den başlıyor
+    await getDescription(i);
+    if (i % 3 == 1) {
+      await getEvolution(j);
+      j++;
+    }
     await getPokemon(i);
   }
 };
+
 const getPokemon = async (id) => {
   let url = `https://pokeapi.co/api/v2/pokemon/${id}`;
   let res = await fetch(url);
   let data = await res.json();
   createPokemonBox(data);
 };
-const createPokemonBox = (pokemon) => {
-  const sprite = pokemon.sprites.front_default;
-  const { stats, types } = pokemon;
-  console.log(pokemon);
 
+const getDescription = async (id) => {
+  let desc = `https://pokeapi.co/api/v2/pokemon-species/${id}/`;
+  let aa = await fetch(desc);
+  let bb = await aa.json();
+  createDescription(bb);
+};
+const getEvolution = async (id) => {
+  let evo = `https://pokeapi.co/api/v2/evolution-chain/${id}/`;
+  let cc = await fetch(evo);
+  let dd = await cc.json();
+  createEvo(dd);
+};
+const createEvo = (evolutionn) => {
+  try {
+    console.log(evolutionn);
+    evolution1 = evolutionn.chain.species.name;
+    evolution2 = evolutionn.chain.evolves_to[0].species.name;
+    evolution3 = evolutionn.chain.evolves_to[0].evolves_to[0].species.name;
+  } catch (error) {
+    console.log("hatalı veri");
+  }
+};
+const createDescription = (descriptionn) => {
+  description = descriptionn.flavor_text_entries[0].flavor_text;
+
+  //console.log(description.flavor_text_entries.map((c) => c.flavor_text));
+};
+
+const createPokemonBox = (pokemon) => {
+  // const sprite = pokemon.sprites.front_default;
+  // const { stats, types, species } = pokemon;
+  //console.log(pokemon);
+  const idPoke = pokemon.id;
+  //console.log(idPoke);
   const name = pokemon.name[0].toUpperCase() + pokemon.name.slice(1); //pokemonların baş harfnin büyük yazılmasını sağladık
   const id = pokemon.id.toString().padStart(3, "0"); //idlerin başına 00 koyduk
-  const type = pokemon.types[0].type.name;
+  const type = pokemon.types.map((a) => a.type.name);
   const color = colors[type];
+  const height = pokemon.height;
+  const weight = pokemon.weight;
+  const moves = pokemon.moves[0].move.name;
+  const abilities = pokemon.abilities.map((b) => b.ability.name);
   const stats1 = pokemon.stats[0].stat.name;
   const stats2 = pokemon.stats[1].stat.name;
   const stats3 = pokemon.stats[2].stat.name;
@@ -55,11 +101,6 @@ const createPokemonBox = (pokemon) => {
   const baseStat4 = pokemon.stats[3].base_stat;
   const baseStat5 = pokemon.stats[4].base_stat;
   const baseStat6 = pokemon.stats[5].base_stat;
-
-  const progress = document.createElement("div");
-  progress.setAttribute("value", baseStat1);
-  progress.setAttribute("max", 100);
-
   const pokemonEl = document.createElement("div");
   pokemonEl.classList.add("poke-box");
   pokemonEl.style.backgroundColor = `${color}`;
@@ -70,16 +111,58 @@ const createPokemonBox = (pokemon) => {
     src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/${id}.png"
     alt="${name} image"
   />
-  <ul>
-  <li><a href="#about">About</a></li>
-  <li><a href="#stats">Stats</a></li>
-  <li><a href="#moves">Moves</a></li>
-  <li><a href="#evolution">Evolution</a></li>
-  <li><a href="#location">Location</a></li>
-</ul>
-  <p class="poke-id"># ${id}</p>
-  <p class="poke-type">Type: ${type}</p>
-  <div class="poke-stats"> ${stats1}</div>
+  <div class="progress-bar">
+<div class="progress-bar-value"></div>
+<div class="progress-bar-fill">${baseStat1}</div> 
+</div> 
+   <div class="tab">
+   <button class="tablinks" onclick="openCity(event, 'about', ${idPoke})">About</button>
+   <button class="tablinks" onclick="openCity(event, 'stats', ${idPoke})">Stats</button>
+   <button class="tablinks" onclick="openCity(event, 'moves', ${idPoke})">Moves</button>
+   <button class="tablinks" onclick="openCity(event, 'evolution', ${idPoke})">Evolution</button>
+   <button class="tablinks" onclick="openCity(event, 'location', ${idPoke})">Location</button>
+   </div> 
+
+<div id="stats${idPoke}" class="tabcontent tabcontent${idPoke}"> 
+<p class="poke-id"># ${idPoke}</p>
+<p class="poke-height">Height: ${height}m</p>
+<p class="poke-weight">Weight: ${weight}kg</p>
+<p class="poke-abilities">Abilities: ${abilities}</p>
+<p class="poke-type">Type: ${type}</p>
+</div>
+
+<div id="moves${idPoke}" class="tabcontent tabcontent${idPoke}"> 
+<p class="poke-id"> ${moves}</p>
+</div>
+
+<div id="evolution${idPoke}" class="tabcontent tabcontent${idPoke}"> 
+${
+  id % 3 == 0
+    ? `
+    <div>
+      <p class="poke-id"># ${evolution1}</p>
+      <p class="poke-id"># ${evolution2}</p>
+      <p class="poke-id"># ${evolution3}</p>
+    </div>
+    `
+    : id % 3 == 2
+    ? `
+    <div>
+      <p class="poke-id"># ${evolution1}</p>
+      <p class="poke-id"># ${evolution2}</p>
+    </div>
+  `
+    : `
+    <div>
+    <p class="poke-id"># ${evolution1}</p>
+    </div>
+    `
+} 
+</div>
+
+<div id="about${idPoke}" class="tabcontent tabcontent${idPoke} showFirst">
+<p>${description}</p>
+<div class="poke-stats"> ${stats1}</div>
   <div class="poke-stats"> ${baseStat1}</div>
   <div class="poke-stats"> ${stats2}</div>
   <div class="poke-stats"> ${baseStat2}</div>
@@ -91,15 +174,27 @@ const createPokemonBox = (pokemon) => {
   <div class="poke-stats"> ${baseStat5}</div>
   <div class="poke-stats"> ${stats6}</div>
   <div class="poke-stats"> ${baseStat6}</div>
-
 </div>
+ </div> 
  
 
   `;
-  pokemonEl.appendChild(progress);
   pokeContainer.appendChild(pokemonEl);
 };
 
+function openCity(evt, cityName, id) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent" + id);
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace("active", "");
+  }
+  document.getElementById(cityName + id).style.display = "block";
+  evt.currentTarget.className += "active";
+}
 initPokemon();
 //inputa girdiğimiz değerin hangi pokemonun baş harfiyle başlıyorsa onları filtreler
 searchIpnut.addEventListener("input", function (e) {
