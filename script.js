@@ -111,19 +111,18 @@ const createPokemonBox = (pokemon) => {
     src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/${id}.png"
     alt="${name} image"
   />
-  <div class="progress-bar">
-<div class="progress-bar-value"></div>
-<div class="progress-bar-fill">${baseStat1}</div> 
-</div> 
+
    <div class="tab">
-   <button class="tablinks" onclick="openCity(event, 'about', ${idPoke})">About</button>
-   <button class="tablinks" onclick="openCity(event, 'stats', ${idPoke})">Stats</button>
+   <button class="tablinks" onclick="openCity(event, 'stats', ${idPoke})">About</button>
+   <button class="tablinks" onclick="openCity(event, 'about', ${idPoke});
+    move(${idPoke},${baseStat1},${baseStat2},${baseStat3},${baseStat4},${baseStat5},${baseStat6});
+    ">Stats</button>
    <button class="tablinks" onclick="openCity(event, 'moves', ${idPoke})">Moves</button>
    <button class="tablinks" onclick="openCity(event, 'evolution', ${idPoke})">Evolution</button>
    <button class="tablinks" onclick="openCity(event, 'location', ${idPoke})">Location</button>
    </div> 
 
-<div id="stats${idPoke}" class="tabcontent tabcontent${idPoke}"> 
+<div id="stats${idPoke}" class="tabcontent tabcontent${idPoke} showFirst"> 
 <p class="poke-id"># ${idPoke}</p>
 <p class="poke-height">Height: ${height}m</p>
 <p class="poke-weight">Weight: ${weight}kg</p>
@@ -160,27 +159,89 @@ ${
 } 
 </div>
 
-<div id="about${idPoke}" class="tabcontent tabcontent${idPoke} showFirst">
-<p>${description}</p>
-<div class="poke-stats"> ${stats1}</div>
-  <div class="poke-stats"> ${baseStat1}</div>
-  <div class="poke-stats"> ${stats2}</div>
-  <div class="poke-stats"> ${baseStat2}</div>
-  <div class="poke-stats"> ${stats3}</div>
-  <div class="poke-stats"> ${baseStat3}</div>
-  <div class="poke-stats"> ${stats4}</div>
-  <div class="poke-stats"> ${baseStat4}</div>
-  <div class="poke-stats"> ${stats5}</div>
-  <div class="poke-stats"> ${baseStat5}</div>
-  <div class="poke-stats"> ${stats6}</div>
-  <div class="poke-stats"> ${baseStat6}</div>
-</div>
- </div> 
- 
+<div id="about${idPoke}" class="tabcontent tabcontent${idPoke} ">
+<p class="description">${description}</p>
 
+  <div class="poke-stats"> ${stats1}</div>
+  <div id="myProgress${idPoke}">
+  <div class="myBar1" id="myBar1${idPoke}">${baseStat1}</div>
+</div>
+
+<div class="poke-stats"> ${stats2}</div>
+<div id="myProgress${idPoke}">
+<div class="myBar2" id="myBar2${idPoke}">${baseStat2}</div>
+</div>
+ 
+  <div class="poke-stats"> ${stats3}</div>
+  <div id="myProgress${idPoke}">
+  <div class="myBar3" id="myBar3${idPoke}">${baseStat3}</div>
+</div>
+
+  <div class="poke-stats"> ${stats4}</div>
+  <div id="myProgress${idPoke}">
+  <div class="myBar4" id="myBar4${idPoke}">${baseStat4}</div>
+</div>
+
+  <div class="poke-stats"> ${stats5}</div>
+  <div id="myProgress${idPoke}">
+  <div class="myBar5" id="myBar5${idPoke}">${baseStat5}</div>
+</div>
+
+  <div class="poke-stats"> ${stats6}</div>
+  <div id="myProgress${idPoke}">
+  <div class="myBar6" id="myBar6${idPoke}">${baseStat6}</div>
+</div>
+
+
+ </div> 
   `;
   pokeContainer.appendChild(pokemonEl);
 };
+
+var i = 0;
+function move(
+  idPoke,
+  baseStat1,
+  baseStat2,
+  baseStat3,
+  baseStat4,
+  baseStat5,
+  baseStat6
+) {
+  if (i == 0) {
+    i = 1;
+    var elem1 = document.getElementById("myBar1" + idPoke);
+    var elem2 = document.getElementById("myBar2" + idPoke);
+    var elem3 = document.getElementById("myBar3" + idPoke);
+    var elem4 = document.getElementById("myBar4" + idPoke);
+    var elem5 = document.getElementById("myBar5" + idPoke);
+    var elem6 = document.getElementById("myBar6" + idPoke);
+
+    var width = 1;
+    var idPoke = setInterval(frame, 10);
+    function frame() {
+      if (
+        width > baseStat1 &&
+        width > baseStat2 &&
+        width > baseStat3 &&
+        width > baseStat4 &&
+        width > baseStat5 &&
+        width > baseStat6
+      ) {
+        clearInterval(idPoke);
+        i = 0;
+      } else {
+        width++;
+        elem1.style.width = baseStat1 + "%";
+        elem2.style.width = baseStat2 + "%";
+        elem3.style.width = baseStat3 + "%";
+        elem4.style.width = baseStat4 + "%";
+        elem5.style.width = baseStat5 + "%";
+        elem6.style.width = baseStat6 + "%";
+      }
+    }
+  }
+}
 
 function openCity(evt, cityName, id) {
   var i, tabcontent, tablinks;
@@ -196,6 +257,7 @@ function openCity(evt, cityName, id) {
   evt.currentTarget.className += "active";
 }
 initPokemon();
+
 //inputa girdiğimiz değerin hangi pokemonun baş harfiyle başlıyorsa onları filtreler
 searchIpnut.addEventListener("input", function (e) {
   const pokeNames = document.querySelectorAll(".poke-name");

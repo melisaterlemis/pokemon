@@ -58,8 +58,9 @@ button {
 }
 .poke-stats {
   display: flex;
-  justify-content: space-between;
-  align-content: space-between;
+  text-align: left;
+  /* justify-content: space-between;
+  align-content: space-between; */
   padding: 5px;
   font-size: 18px;
 }
@@ -112,6 +113,47 @@ li a {
 li a:hover {
   color: red;
 } */
+#myProgress {
+  width: 100%;
+  background-color: #ddd;
+}
+
+.myBar1 {
+  width: 1%;
+  height: 30px;
+  background-color: #04aa6d;
+  border-radius: 50px;
+}
+.myBar2 {
+  width: 1%;
+  height: 30px;
+  background-color: #04aa6d;
+  border-radius: 50px;
+}
+.myBar3 {
+  width: 1%;
+  height: 30px;
+  background-color: #04aa6d;
+  border-radius: 50px;
+}
+.myBar4 {
+  width: 1%;
+  height: 30px;
+  background-color: #04aa6d;
+  border-radius: 50px;
+}
+.myBar5 {
+  width: 1%;
+  height: 30px;
+  background-color: #04aa6d;
+  border-radius: 50px;
+}
+.myBar6 {
+  width: 1%;
+  height: 30px;
+  background-color: #04aa6d;
+  border-radius: 50px;
+}
 /* Style the tab */
 .tab {
   overflow: hidden;
@@ -129,12 +171,17 @@ li a:hover {
   font-size: 16px;
   color: rgb(153, 143, 143);
 }
-
+.description {
+  font-size: 15px;
+  color: rgb(88, 79, 79);
+  text-align: left;
+}
 /* Style the tab content */
 .tabcontent {
   display: none;
   padding: 3px 3px;
   border-top: none;
+  text-align: left;
 }
 
 .showFirst {
