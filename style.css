@@ -158,7 +158,43 @@ li a:hover {
 .tab {
   overflow: hidden;
 }
-
+.favori-class {
+  background-color: inherit;
+  float: right;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 2px 3px;
+  transition: 0.3s;
+  font-size: 16px;
+  color: rgb(153, 143, 143);
+}
+.favori-card-list {
+  width: 100%;
+  height: auto;
+}
+.favori-card-list h2 {
+  float: left;
+  font-size: 25px;
+  font-weight: bold;
+  padding-left: 150px;
+  padding-top: 50px;
+  color: rgb(63, 121, 124);
+  font-family: "Poppins", sans-serif;
+}
+.diger-card-list {
+  width: 100%;
+  height: auto;
+}
+.diger-card-list h2 {
+  float: left;
+  font-size: 25px;
+  font-weight: bold;
+  padding-left: 150px;
+  padding-top: 50px;
+  color: rgb(63, 121, 124);
+  font-family: "Poppins", sans-serif;
+}
 /* Style the buttons inside the tab */
 .tab button {
   background-color: inherit;
@@ -171,6 +207,7 @@ li a:hover {
   font-size: 16px;
   color: rgb(153, 143, 143);
 }
+
 .description {
   font-size: 15px;
   color: rgb(88, 79, 79);

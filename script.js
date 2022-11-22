@@ -1,6 +1,8 @@
 const searchIpnut = document.querySelector("#poke-input");
 const searchButton = document.querySelector(".search-btn");
 const pokeContainer = document.querySelector(".poke-container");
+const favoriCardList = document.querySelector(".favori-card-list");
+const digerCardList = document.querySelector(".diger-card-list");
 //const pokeStats = document.querySelector(".poke-stats");
 
 let description;
@@ -71,14 +73,12 @@ const createEvo = (evolutionn) => {
 };
 const createDescription = (descriptionn) => {
   description = descriptionn.flavor_text_entries[0].flavor_text;
-
   //console.log(description.flavor_text_entries.map((c) => c.flavor_text));
 };
-
 const createPokemonBox = (pokemon) => {
   // const sprite = pokemon.sprites.front_default;
   // const { stats, types, species } = pokemon;
-  //console.log(pokemon);
+  // console.log(pokemon);
   const idPoke = pokemon.id;
   //console.log(idPoke);
   const name = pokemon.name[0].toUpperCase() + pokemon.name.slice(1); //pokemonların baş harfnin büyük yazılmasını sağladık
@@ -105,6 +105,7 @@ const createPokemonBox = (pokemon) => {
   pokemonEl.classList.add("poke-box");
   pokemonEl.style.backgroundColor = `${color}`;
   pokemonEl.innerHTML = `
+  <button class="favori-class${idPoke}" onclick="star(${idPoke})"><span class="fa fa-star"></span></button>
   <h3 class="poke-name">${name}</h3>
   <img
     class="poke-img"
@@ -191,11 +192,11 @@ ${
   <div id="myProgress${idPoke}">
   <div class="myBar6" id="myBar6${idPoke}">${baseStat6}</div>
 </div>
-
-
  </div> 
+ </div>
   `;
   pokeContainer.appendChild(pokemonEl);
+  digerCardList.appendChild(pokeContainer);
 };
 
 var i = 0;
@@ -243,6 +244,12 @@ function move(
   }
 }
 
+function star(idPoke) {
+  var starEl = document.getElementsByClassName("favori-class" + idPoke);
+  var ss = starEl[0].parentNode;
+  var favori = document.querySelector(".favori-card-list");
+  favori.appendChild(ss);
+}
 function openCity(evt, cityName, id) {
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("tabcontent" + id);
