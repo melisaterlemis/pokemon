@@ -92,6 +92,21 @@ button {
 .poke-box .poke-name {
   text-transform: capitalize;
 }
+.poke-box button {
+  background-color: inherit;
+  float: right;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 2px 3px;
+  transition: 0.3s;
+  font-size: 16px;
+  color: rgb(153, 143, 143);
+}
+.checked {
+  color: orange;
+}
+
 /* ul {
   list-style-type: none;
   margin: 0;
@@ -170,15 +185,20 @@ li a:hover {
   color: rgb(153, 143, 143);
 }
 .favori-card-list {
-  width: 100%;
+  width: 100vw;
   height: auto;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  overflow-x: hidden;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
 }
-.favori-card-list h2 {
-  float: left;
+h2 {
+  text-align: left;
+  padding-left: 150px;
   font-size: 25px;
   font-weight: bold;
-  padding-left: 150px;
-  padding-top: 50px;
   color: rgb(63, 121, 124);
   font-family: "Poppins", sans-serif;
 }

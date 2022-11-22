@@ -245,11 +245,14 @@ function move(
 }
 
 function star(idPoke) {
+  var rate = "";
   var starEl = document.getElementsByClassName("favori-class" + idPoke);
   var ss = starEl[0].parentNode;
+  rate += '<span class="fa fa-star checked"></span>';
   var favori = document.querySelector(".favori-card-list");
   favori.appendChild(ss);
 }
+
 function openCity(evt, cityName, id) {
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("tabcontent" + id);
