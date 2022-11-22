@@ -195,6 +195,7 @@ li a:hover {
   align-items: center;
 }
 h2 {
+  padding-top: 50px;
   text-align: left;
   padding-left: 150px;
   font-size: 25px;

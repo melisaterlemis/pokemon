@@ -63,12 +63,12 @@ const getEvolution = async (id) => {
 };
 const createEvo = (evolutionn) => {
   try {
-    console.log(evolutionn);
+    // console.log(evolutionn);
     evolution1 = evolutionn.chain.species.name;
     evolution2 = evolutionn.chain.evolves_to[0].species.name;
     evolution3 = evolutionn.chain.evolves_to[0].evolves_to[0].species.name;
   } catch (error) {
-    console.log("hatalı veri");
+    // console.log("hatalı veri");
   }
 };
 const createDescription = (descriptionn) => {
@@ -245,10 +245,10 @@ function move(
 }
 
 function star(idPoke) {
-  var rate = "";
   var starEl = document.getElementsByClassName("favori-class" + idPoke);
   var ss = starEl[0].parentNode;
-  rate += '<span class="fa fa-star checked"></span>';
+  var buton = starEl[0].childNodes;
+  buton[0].classList.add("checked");
   var favori = document.querySelector(".favori-card-list");
   favori.appendChild(ss);
 }
