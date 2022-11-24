@@ -3,7 +3,7 @@ const searchButton = document.querySelector(".search-btn");
 const pokeContainer = document.querySelector(".poke-container");
 const favoriCardList = document.querySelector(".favori-card-list");
 const digerCardList = document.querySelector(".diger-card-list");
-const data = [];
+
 let description;
 let evolution1;
 let evolution2;
@@ -27,15 +27,18 @@ const colors = {
   ice: "#e0f5ff",
 };
 const pokeCount = 225;
-//const evoCount = 225 / 3;
+const evoCount = 225 / 3;
 
 const initPokemon = async () => {
-  for (let i = 1; i <= pokeCount; i++) {
+  for (let i = 1, j = 1; i <= pokeCount; i++) {
     //i 1 den başladı çünkü pokemon id leri 1 den başlıyor
     await getDescription(i);
+    if (i % 3 == 1) {
+      await getEvolution(j);
+      j++;
+    }
     await getPokemon(i);
   }
-  var a = await getEvolution();
 };
 
 const getPokemon = async (id) => {
@@ -46,35 +49,28 @@ const getPokemon = async (id) => {
 };
 
 const getDescription = async (id) => {
-  let desc = `https://pokeapi.co/api/v2/pokemon-species/${id}`;
+  let desc = `https://pokeapi.co/api/v2/pokemon-species/${id}/`;
   let aa = await fetch(desc);
   let bb = await aa.json();
   createDescription(bb);
 };
-const getEvolution = async () => {
-  for (i = 1; i < 200; i++) {
-    let evo = `https://pokeapi.co/api/v2/evolution-chain/${i} `;
-    let cc = await fetch(evo).then((res) => res);
-    let dd = await cc.json();
-    createEvo(dd);
-  }
+const getEvolution = async (id) => {
+  let evo = `https://pokeapi.co/api/v2/evolution-chain/${id}/`;
+  let cc = await fetch(evo);
+  let dd = await cc.json();
+  createEvo(dd);
 };
 
 const createEvo = (evolutionn) => {
-  let temp = [];
   try {
+    // console.log(evolutionn);
     evolution1 = evolutionn.chain.species.name;
-    temp.push(evolution1);
     evolution2 = evolutionn.chain.evolves_to[0].species.name;
-    temp.push(evolution2);
     evolution3 = evolutionn.chain.evolves_to[0].evolves_to[0].species.name;
-    temp.push(evolution3);
   } catch (error) {
-    console.log("hatali");
+    // console.log("hatalı veri");
   }
-  data.push(temp);
 };
-console.log(data);
 const createDescription = (descriptionn) => {
   description = descriptionn.flavor_text_entries[0].flavor_text;
   //console.log(description.flavor_text_entries.map((c) => c.flavor_text));
@@ -140,7 +136,28 @@ const createPokemonBox = (pokemon) => {
 </div>
 
 <div id="evolution${idPoke}" class="tabcontent tabcontent${idPoke}"> 
-
+${
+  id % 3 == 0
+    ? `
+    <div>
+      <p class="poke-id"># ${evolution1}</p>
+      <p class="poke-id"># ${evolution2}</p>
+      <p class="poke-id"># ${evolution3}</p>
+    </div>
+    `
+    : id % 3 == 2
+    ? `
+    <div>
+      <p class="poke-id"># ${evolution1}</p>
+      <p class="poke-id"># ${evolution2}</p>
+    </div>
+  `
+    : `
+    <div>
+    <p class="poke-id"># ${evolution1}</p>
+    </div>
+    `
+} 
 </div>
 
 <div id="about${idPoke}" class="tabcontent tabcontent${idPoke} ">
@@ -182,6 +199,7 @@ const createPokemonBox = (pokemon) => {
   digerCardList.appendChild(pokeContainer);
 };
 
+var i = 0;
 function move(
   idPoke,
   baseStat1,
@@ -191,19 +209,39 @@ function move(
   baseStat5,
   baseStat6
 ) {
-  var elem1 = document.getElementById("myBar1" + idPoke);
-  var elem2 = document.getElementById("myBar2" + idPoke);
-  var elem3 = document.getElementById("myBar3" + idPoke);
-  var elem4 = document.getElementById("myBar4" + idPoke);
-  var elem5 = document.getElementById("myBar5" + idPoke);
-  var elem6 = document.getElementById("myBar6" + idPoke);
+  if (i == 0) {
+    i = 1;
+    var elem1 = document.getElementById("myBar1" + idPoke);
+    var elem2 = document.getElementById("myBar2" + idPoke);
+    var elem3 = document.getElementById("myBar3" + idPoke);
+    var elem4 = document.getElementById("myBar4" + idPoke);
+    var elem5 = document.getElementById("myBar5" + idPoke);
+    var elem6 = document.getElementById("myBar6" + idPoke);
 
-  elem1.style.width = baseStat1 + "%";
-  elem2.style.width = baseStat2 + "%";
-  elem3.style.width = baseStat3 + "%";
-  elem4.style.width = baseStat4 + "%";
-  elem5.style.width = baseStat5 + "%";
-  elem6.style.width = baseStat6 + "%";
+    var width = 1;
+    var idPoke = setInterval(frame, 10);
+    function frame() {
+      if (
+        width > baseStat1 &&
+        width > baseStat2 &&
+        width > baseStat3 &&
+        width > baseStat4 &&
+        width > baseStat5 &&
+        width > baseStat6
+      ) {
+        clearInterval(idPoke);
+        i = 0;
+      } else {
+        width++;
+        elem1.style.width = baseStat1 + "%";
+        elem2.style.width = baseStat2 + "%";
+        elem3.style.width = baseStat3 + "%";
+        elem4.style.width = baseStat4 + "%";
+        elem5.style.width = baseStat5 + "%";
+        elem6.style.width = baseStat6 + "%";
+      }
+    }
+  }
 }
 
 function star(idPoke) {
