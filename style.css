@@ -140,6 +140,17 @@ button {
   font-size: 16px;
   color: rgb(153, 143, 143);
 }
+.back-class {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 2px 3px;
+  transition: 0.3s;
+  font-size: 16px;
+  color: rgb(153, 143, 143);
+}
 .favori-card-list {
   width: 100vw;
   height: auto;
