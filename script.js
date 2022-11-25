@@ -89,17 +89,25 @@ const getPokemon = async (id, showCount = 0) => {
 
   pokeContainer.appendChild(pokemonEl);
   digerCardList.appendChild(pokeContainer);
+
+  setEventListener(id, data, showCount);
 };
 
 initPokemon();
 
+function setEventListener(id, data, showCount) {
+  document
+    .getElementById("back-id" + id)
+    .addEventListener("click", function () {
+      showCount = showCount + 1 >= data.evolution.length ? 0 : showCount + 1;
+      SetPokeBox(id, data, showCount);
+    });
+}
+
 function SetPokeBox(id, data, showCount) {
-  let pokemonEl = document.getElementsByClassName("poke-box" + id);
-  pokemonEl.innerHTML = GetPokeBox(
-    id,
-    data,
-    showCount + 1 >= data.evolution.length ? 0 : showCount + 1
-  );
+  let pokemonEl = document.getElementsByClassName("poke-box" + id)[0];
+  pokemonEl.innerHTML = GetPokeBox(id, data, showCount);
+  setEventListener(id, data, showCount);
 }
 
 const GetPokeBox = (id, data, showCount) => {
@@ -120,11 +128,12 @@ const GetPokeBox = (id, data, showCount) => {
   let baseStat4 = data.data[showCount].stats[3].base_stat;
   let baseStat5 = data.data[showCount].stats[4].base_stat;
   let baseStat6 = data.data[showCount].stats[5].base_stat;
+
   return `
       <button class="favori-class${id}" onclick="star(${id})"><span class="fa fa-star"></span></button>
 
-      <button id="back-id${id}" 
-      onclick="() => {SetPokeBox(${id}, ${data}, ${showCount})}" class="back-class")
+      <button id="back-id${id}" class="back-class"
+      
       <span class="fa-solid fa-angle-left">></span>
       </button>
       <h3 class="poke-name">${data.data[showCount].name}</h3>
