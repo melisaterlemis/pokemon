@@ -161,7 +161,7 @@ button {
   justify-content: center;
   align-items: center;
 }
-h2 {
+.h2 {
   padding-top: 50px;
   text-align: left;
   padding-left: 150px;
@@ -232,4 +232,21 @@ h2 {
   position: absolute;
   width: 100%;
   height: 100%;
+}
+#footer {
+  height: 100px;
+  width: 50%;
+  color: rgb(18, 58, 95);
+  font-size: 20px;
+  font-weight: bold;
+  border: 3px solid rgb(24, 76, 78);
+  border-radius: 50px;
+  background-color: rgb(165, 209, 211);
+  margin-left: 400px;
+  margin-bottom: 50px;
+  padding-top: 10px;
+}
+.fa-solid:hover {
+  color: #09cc54;
+  width: 20px;
 }

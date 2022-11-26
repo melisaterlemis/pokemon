@@ -3,8 +3,12 @@ const searchButton = document.querySelector(".search-btn");
 const pokeContainer = document.querySelector(".poke-container");
 const favoriCardList = document.querySelector(".favori-card-list");
 const digerCardList = document.querySelector(".diger-card-list");
+const h2 = document.getElementById("idh2");
+h2.style.display = "none";
+const iddiger = document.getElementById("idDiger");
+iddiger.style.display = "none";
 let description;
-
+let listCount = 0;
 const colors = {
   fire: "#FDDFDF",
   grass: "#DEFDE0",
@@ -22,7 +26,7 @@ const colors = {
   normal: "#F5F5F5",
   ice: "#e0f5ff",
 };
-const pokeCount = 25;
+let pokeCount = 25;
 //const evoCount = 225 / 3;
 
 const initPokemon = async () => {
@@ -71,6 +75,7 @@ const getPokemon = async (id, showCount = 0) => {
   data.data = pokemonResponse;
   data.evolution = evolution;
   data.images = images;
+
   // console.log(data);
   let desc = `https://pokeapi.co/api/v2/pokemon-species/${id}`;
   let aa = await fetch(desc);
@@ -132,11 +137,14 @@ const GetPokeBox = (id, data, showCount) => {
   return `
       <button class="favori-class${id}" onclick="star(${id})"><span class="fa fa-star"></span></button>
 
-      <button id="back-id${id}" class="back-class"
-      
-      <span class="fa-solid fa-angle-left">></span>
+      <button id="back-id${id}" class="back-class">
+      <span class="fa-solid fa-angle-right"></span>
       </button>
-      <h3 class="poke-name">${data.data[showCount].name}</h3>
+
+      <h3 class="poke-name">${data.data[showCount].name}
+      <div class="hidden-class" style="visibility: hidden">${evolution}</div>
+      </h3>
+
       <img
         class="poke-img"
         src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/${data.data[
@@ -146,7 +154,7 @@ const GetPokeBox = (id, data, showCount) => {
           .padStart(3, "0")}.png"
         alt="${data.data[showCount].name} image"
       />
-    
+      
        <div class="tab">
        <button class="tablinks active" onclick="openCity(event, 'stats', ${id})">About</button>
        <button class="tablinks active" onclick="openCity(event, 'about', ${id});
@@ -205,13 +213,14 @@ const GetPokeBox = (id, data, showCount) => {
       <div id="myProgress${id}">
       <div class="myBar6" id="myBar6${id}">${baseStat6}</div>
     </div>
+
      </div> 
      </div>
       `;
 };
 
 function move(
-  dataid,
+  id,
   baseStat1,
   baseStat2,
   baseStat3,
@@ -219,12 +228,12 @@ function move(
   baseStat5,
   baseStat6
 ) {
-  var elem1 = document.getElementById("myBar1" + dataid);
-  var elem2 = document.getElementById("myBar2" + dataid);
-  var elem3 = document.getElementById("myBar3" + dataid);
-  var elem4 = document.getElementById("myBar4" + dataid);
-  var elem5 = document.getElementById("myBar5" + dataid);
-  var elem6 = document.getElementById("myBar6" + dataid);
+  var elem1 = document.getElementById("myBar1" + id);
+  var elem2 = document.getElementById("myBar2" + id);
+  var elem3 = document.getElementById("myBar3" + id);
+  var elem4 = document.getElementById("myBar4" + id);
+  var elem5 = document.getElementById("myBar5" + id);
+  var elem6 = document.getElementById("myBar6" + id);
   if (baseStat1 < 100) {
     elem1.style.width = baseStat1 + "%";
   } else {
@@ -253,17 +262,24 @@ function move(
   if (baseStat6 < 100) {
     elem6.style.width = baseStat6 + "%";
   } else {
-    elem6.style.width = baseStat6 + "%";
+    elem6.style.width = 100 + "%";
   }
 }
-
-function star(dataid) {
-  var starEl = document.getElementsByClassName("favori-class" + dataid);
+let favCount = 0;
+function star(id) {
+  var starEl = document.getElementsByClassName("favori-class" + id);
   var ss = starEl[0].parentNode;
   var buton = starEl[0].childNodes;
   buton[0].classList.add("checked");
   var favori = document.querySelector(".favori-card-list");
   favori.appendChild(ss);
+  h2.style.display = "block";
+  iddiger.style.display = "block";
+
+  favCount++;
+  pokeCount--;
+  footerBox.innerHTML = `<div>Listelenen pokemon sayısı: ${pokeCount}<div>
+  <div>Favoriye Eklenen Pokemon Sayısı: ${favCount}</div>`;
 }
 
 function openCity(evt, cityName, id) {
@@ -292,4 +308,8 @@ searchIpnut.addEventListener("input", function (e) {
       pokeName.parentElement.style.display = "none";
     }
   });
+  listCount++;
+  footerBox.innerHTML = `<div class="footerClass">Listelenen pokemon sayısı: ${listCount}<div>`;
 });
+let footerBox = document.getElementById("footer");
+footerBox.innerHTML = `<div class="footerClass">Listelenen pokemon sayısı: ${pokeCount}<div>`;
