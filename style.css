@@ -157,9 +157,10 @@ button {
   display: grid;
   grid-template-columns: auto auto auto;
   overflow-x: hidden;
-  text-align: center;
-  justify-content: center;
+  text-align: left;
+  justify-content: left;
   align-items: center;
+  margin-left: 50px;
 }
 .h2 {
   padding-top: 50px;
@@ -183,6 +184,12 @@ button {
   color: rgb(63, 121, 124);
   font-family: "Poppins", sans-serif;
 }
+.tab {
+  overflow: hidden;
+  border: none;
+  background-color: none;
+}
+
 /* Style the buttons inside the tab */
 .tab button {
   background-color: inherit;
@@ -196,17 +203,47 @@ button {
   color: rgb(153, 143, 143);
 }
 
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: none;
+  border-top: none;
+}
+/* Style the buttons inside the tab */
+.tab button {
+  /* background-color: inherit; */
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 2px 3px;
+  transition: 0.3s;
+  font-size: 16px;
+  /* color: rgb(153, 143, 143); */
+}
+
 .tabcontent {
   display: none;
   padding: 3px 3px;
   border-top: none;
   text-align: left;
 }
-.active,
+/* .active,
 .tablinks:hover {
   background-color: #3ab488;
   color: white;
-}
+} */
 
 .showFirst {
   display: block;

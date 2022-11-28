@@ -3,6 +3,7 @@ const searchButton = document.querySelector(".search-btn");
 const pokeContainer = document.querySelector(".poke-container");
 const favoriCardList = document.querySelector(".favori-card-list");
 const digerCardList = document.querySelector(".diger-card-list");
+
 const h2 = document.getElementById("idh2");
 h2.style.display = "none";
 const iddiger = document.getElementById("idDiger");
@@ -76,7 +77,7 @@ const getPokemon = async (id, showCount = 0) => {
   data.evolution = evolution;
   data.images = images;
 
-  // console.log(data);
+  console.log(data);
   let desc = `https://pokeapi.co/api/v2/pokemon-species/${id}`;
   let aa = await fetch(desc);
   let bb = await aa.json();
@@ -265,23 +266,32 @@ function move(
     elem6.style.width = 100 + "%";
   }
 }
-let favCount = 0;
-function star(id) {
-  var starEl = document.getElementsByClassName("favori-class" + id);
+var favCount = 0;
+function star(dataid) {
+  var starEl = document.getElementsByClassName("favori-class" + dataid);
   var ss = starEl[0].parentNode;
   var buton = starEl[0].childNodes;
-  buton[0].classList.add("checked");
-  var favori = document.querySelector(".favori-card-list");
-  favori.appendChild(ss);
-  h2.style.display = "block";
-  iddiger.style.display = "block";
+  if (buton[0].className === "fa fa-star checked") {
+    buton[0].className = "fa fa-star";
+    favoriCardList.removeChild(ss);
+    digerCardList.appendChild(ss);
+    favCount--;
+    pokeCount++;
 
-  favCount++;
-  pokeCount--;
-  footerBox.innerHTML = `<div>Listelenen pokemon sayısı: ${pokeCount}<div>
-  <div>Favoriye Eklenen Pokemon Sayısı: ${favCount}</div>`;
+    footerBox.innerHTML = `<div>Listelenen pokemon sayısı: ${pokeCount}<div>
+    <div>Favoriye Eklenen Pokemon Sayısı: ${favCount}</div>`;
+  } else {
+    buton[0].className = "fa fa-star checked";
+    favoriCardList.appendChild(ss);
+    h2.style.display = "block";
+    iddiger.style.display = "block";
+    favCount++;
+    pokeCount--;
+
+    footerBox.innerHTML = `<div>Listelenen pokemon sayısı: ${pokeCount}<div>
+    <div>Favoriye Eklenen Pokemon Sayısı: ${favCount}</div>`;
+  }
 }
-
 function openCity(evt, cityName, id) {
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("tabcontent" + id);
