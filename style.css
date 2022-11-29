@@ -39,7 +39,7 @@ input:focus {
   outline: none;
 }
 
-button {
+.search-btn {
   background-color: rgb(198, 239, 241);
   cursor: pointer;
   border-bottom: 3px solid rgb(91, 177, 182);
@@ -160,7 +160,7 @@ button {
   text-align: left;
   justify-content: left;
   align-items: center;
-  margin-left: 50px;
+  margin-left: 110px;
 }
 .h2 {
   padding-top: 50px;
@@ -174,6 +174,8 @@ button {
 .diger-card-list {
   width: 100%;
   height: auto;
+  display: flex;
+  flex-wrap: wrap;
 }
 .diger-card-list h2 {
   float: left;
@@ -184,13 +186,37 @@ button {
   color: rgb(63, 121, 124);
   font-family: "Poppins", sans-serif;
 }
+/* Style the tab */
 .tab {
+  overflow: hidden;
+}
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 17px;
+}
+.tab button:hover {
+  background-color: #ddd;
+}
+.tab button.active {
+  background-color: #ccc;
+}
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border-top: none;
+}
+/* .tab {
   overflow: hidden;
   border: none;
   background-color: none;
 }
 
-/* Style the buttons inside the tab */
+
 .tab button {
   background-color: inherit;
   float: left;
@@ -203,26 +229,25 @@ button {
   color: rgb(153, 143, 143);
 }
 
-/* Change background color of buttons on hover */
+
 .tab button:hover {
   background-color: #ddd;
 }
 
-/* Create an active/current tablink class */
+
 .tab button.active {
   background-color: #ccc;
 }
 
-/* Style the tab content */
+
 .tabcontent {
   display: none;
   padding: 6px 12px;
   border: none;
   border-top: none;
 }
-/* Style the buttons inside the tab */
 .tab button {
-  /* background-color: inherit; */
+
   float: left;
   border: none;
   outline: none;
@@ -230,7 +255,7 @@ button {
   padding: 2px 3px;
   transition: 0.3s;
   font-size: 16px;
-  /* color: rgb(153, 143, 143); */
+
 }
 
 .tabcontent {
@@ -238,11 +263,6 @@ button {
   padding: 3px 3px;
   border-top: none;
   text-align: left;
-}
-/* .active,
-.tablinks:hover {
-  background-color: #3ab488;
-  color: white;
 } */
 
 .showFirst {

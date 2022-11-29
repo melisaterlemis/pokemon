@@ -27,7 +27,7 @@ const colors = {
   normal: "#F5F5F5",
   ice: "#e0f5ff",
 };
-let pokeCount = 25;
+let pokeCount = 24;
 //const evoCount = 225 / 3;
 
 const initPokemon = async () => {
@@ -157,16 +157,16 @@ const GetPokeBox = (id, data, showCount) => {
       />
       
        <div class="tab">
-       <button class="tablinks active" onclick="openCity(event, 'stats', ${id})">About</button>
-       <button class="tablinks active" onclick="openCity(event, 'about', ${id});
+       <button  class="tablinks${id}" onclick="openCity(event, 'about', ${id})">About</button>
+       <button  class="tablinks${id}" onclick="openCity(event, 'stats', ${id});
         move(${id},${baseStat1},${baseStat2},${baseStat3},${baseStat4},${baseStat5},${baseStat6});
         ">Stats</button>
-       <button class="tablinks active" onclick="openCity(event, 'moves', ${id})">Moves</button>
-       <button class="tablinks active" onclick="openCity(event, 'evolution', ${id});">Evolution</button>
-       <button class="tablinks active" onclick="openCity(event, 'location', ${id})">Location</button>
+       <button  class="tablinks${id}" onclick="openCity(event, 'moves', ${id})">Moves</button>
+       <button  class="tablinks${id}" onclick="openCity(event, 'evolution', ${id});">Evolution</button>
+       <button  class="tablinks${id}" onclick="openCity(event, 'location', ${id})">Location</button>
        </div> 
     
-    <div id="stats${id}" class="tabcontent tabcontent${id} showFirst "> 
+    <div id="about${id}" class="tabcontent tabcontent${id} showFirst "> 
     <p class="poke-id"># ${id}</p>
     <p class="poke-height">Height: ${data.data[showCount].height}m</p>
     <p class="poke-weight">Weight: ${data.data[showCount].weight}kg</p>
@@ -182,7 +182,7 @@ const GetPokeBox = (id, data, showCount) => {
     <p class="poke-evo1">${evolution}</p>
     </div>
     
-    <div id="about${id}" class="tabcontent tabcontent${id} ">
+    <div id="stats${id}" class="tabcontent tabcontent${id} ">
     <p class="description">${data.data[showCount].description}</p>
     
       <div class="poke-stats"> ${stats1}</div>
@@ -274,10 +274,13 @@ function star(dataid) {
   if (buton[0].className === "fa fa-star checked") {
     buton[0].className = "fa fa-star";
     favoriCardList.removeChild(ss);
-    digerCardList.appendChild(ss);
+    pokeContainer.appendChild(ss);
     favCount--;
     pokeCount++;
-
+    if (favCount == 0) {
+      h2.style.display = "none";
+      iddiger.style.display = "none";
+    }
     footerBox.innerHTML = `<div>Listelenen pokemon sayısı: ${pokeCount}<div>
     <div>Favoriye Eklenen Pokemon Sayısı: ${favCount}</div>`;
   } else {
@@ -298,12 +301,13 @@ function openCity(evt, cityName, id) {
   for (i = 0; i < tabcontent.length; i++) {
     tabcontent[i].style.display = "none";
   }
-  tablinks = document.getElementsByClassName("tablinks active");
+  tablinks = document.getElementsByClassName("tablinks" + id);
   for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace("active", "");
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
   }
-  document.getElementById(cityName + id).style.display = "block";
-  evt.currentTarget.className += "active";
+  let cc = document.getElementById(cityName + id);
+  cc.style.display = "block";
+  evt.currentTarget.className += " active";
 }
 
 //inputa girdiğimiz değerin hangi pokemonun baş harfiyle başlıyorsa onları filtreler
