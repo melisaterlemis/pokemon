@@ -200,10 +200,12 @@ input:focus {
   font-size: 17px;
 }
 .tab button:hover {
-  background-color: #ddd;
+  background-color: rgb(45, 189, 133);
+  color: white;
 }
 .tab button.active {
-  background-color: #ccc;
+  background-color: rgb(45, 189, 133);
+  color: white;
 }
 .tabcontent {
   display: none;

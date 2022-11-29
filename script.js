@@ -183,7 +183,7 @@ const GetPokeBox = (id, data, showCount) => {
     </div>
     
     <div id="stats${id}" class="tabcontent tabcontent${id} ">
-    <p class="description">${data.data[showCount].description}</p>
+   
     
       <div class="poke-stats"> ${stats1}</div>
       <div id="myProgress${id}">
